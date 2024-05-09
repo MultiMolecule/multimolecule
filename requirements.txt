@@ -1,0 +1,4 @@
+biopython
+pandas
+psycopg2
+torch

@@ -23,11 +23,11 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: "pip"
       - name: Install dependencies for testing
-        run: pip install pytest pytest-cov torch torchvision
+        run: pip install pytest pytest-cov
       - name: Install module
-        run: pip install -e .
+        run: pip install -r requirements.txt && pip install -e .
       - name: pytest
-        run: pytest --cov=materialx --cov-report=xml --cov-report=html .
+        run: pytest -m "not lfs" --cov=materialx --cov-report=xml --cov-report=html .
       - name: Upload coverage report for documentation
         uses: actions/upload-artifact@v3
         with:
@@ -83,11 +83,11 @@ jobs:
   release:
     if: startsWith(github.event.ref, 'refs/tags/v')
     needs: [lint, test]
+    environment: pypi
     permissions:
       contents: write
       id-token: write
     runs-on: ubuntu-latest
-    environment: pypi
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
@@ -110,6 +110,7 @@ jobs:
   develop:
     if: contains(fromJson('["refs/heads/master", "refs/heads/main"]'), github.ref)
     needs: [lint, test]
+    environment: pypi
     permissions:
       contents: write
     runs-on: ubuntu-latest
