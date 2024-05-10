@@ -16,4 +16,4 @@
 
 from chanfig import Registry
 
-HeadRegistry = Registry(fallback=True)
+HeadRegistry = Registry(default_factory=Registry, fallback=True)

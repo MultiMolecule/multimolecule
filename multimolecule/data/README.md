@@ -14,5 +14,5 @@ The `data` package is designed to complement [`datasets`](https://huggingface.co
 
 ## Key Features
 
-- Data Pre-Processing: [`Dataset`][multimolecule.Dataset] is a base class that provides a consistent interface for pre-processing data. It includes methods for identifying the data columns, tokenizing sequences, and batching.
+- Data Pre-Processing: [`Dataset`][multimolecule.Dataset] is a base class that provides a consistent interface for pre-processing data. It includes methods for identifying the data columns and tasks, tokenizing sequences, and batching.
 - Data Loading: [`PandasDataset`][multimolecule.PandasDataset] is a subclass of [`Dataset`][multimolecule.Dataset] that loads data in a [`DataFrame`][pandas.DataFrame] compatible format. This provides a convenient way to work with many common data formats, including CSV, JSON, and Excel files.

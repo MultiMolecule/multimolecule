@@ -17,16 +17,21 @@
 from __future__ import annotations
 
 from collections.abc import Iterable, Mapping, Sequence
+from functools import cached_property
 from typing import Any, List
 
 import danling as dl
 import datasets
 import torch
+from chanfig import NestedDict
 from danling import NestedTensor
 from torch import Tensor
 from transformers import AutoTokenizer, PreTrainedTokenizerBase
 
 from multimolecule import defaults
+from multimolecule.tasks import Task
+
+from .utils import infer_task
 
 
 class Dataset(datasets.Dataset):
@@ -34,8 +39,14 @@ class Dataset(datasets.Dataset):
     The base class for all datasets.
 
     Dataset is a subclass of [`datasets.Dataset`][] that provides additional functionality for handling structured data.
+    It has three main features:
+
+    - column identification: identify the special columns (sequence and structure columns) in the dataset.
+    - tokenization: tokenize the sequence columns in the dataset using a pretrained tokenizer.
+    - task inference: infer the task type and level of each label column in the dataset.
 
     Attributes:
+        tasks: A nested dictionary of the inferred tasks for each label column in the dataset.
         tokenizer: The pretrained tokenizer to use for tokenization.
         truncation: Whether to truncate sequences that exceed the maximum length of the tokenizer.
         max_length: The maximum length of the input sequences.
@@ -187,6 +198,10 @@ class Dataset(datasets.Dataset):
         else:
             self.set_transform(self.tokenize_transform)
 
+    @cached_property
+    def tasks(self) -> NestedDict:
+        return self.infer_tasks()
+
     def torch_transform(self, batch: Mapping) -> Mapping:
         r"""
         Default [`transform`][datasets.Dataset.set_transform] function when `preprocess` is `True`.
@@ -220,6 +235,21 @@ class Dataset(datasets.Dataset):
             return torch.tensor(data)
         except ValueError:
             return NestedTensor(data)
+
+    def infer_tasks(self, sequence_col: str | None = None) -> NestedDict:
+        return NestedDict({col: self.infer_task(col, sequence_col) for col in self.label_cols})
+
+    def infer_task(self, label_col: str, sequence_col: str | None = None) -> Task:
+        if sequence_col is None:
+            if len(self.sequence_cols) != 1:
+                raise ValueError("sequence_col must be specified if there are multiple sequence columns.")
+            sequence_col = self.sequence_cols[0]
+        sequence = self._data.column(sequence_col)
+        column = self._data.column(label_col)
+        # is_nested = isinstance(column.type, ListType)
+        # if is_nested:
+        #     column = column.combine_chunks().flatten()
+        return infer_task(sequence, column)
 
     def __getitems__(self, key: int | slice | Iterable[int]) -> Any:
         return self.__getitem__(key)
