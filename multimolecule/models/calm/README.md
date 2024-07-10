@@ -39,7 +39,7 @@ _Codon language embeddings provide strong signals for use in protein engineering
 
 The MultiMolecule team is committed to the principles of open access and open science.
 
-We do NOT endorse the publication of manuscripts in Closed Access / Author-Fee journals and encourage the community to support Open Access journals.
+We do NOT endorse the publication of manuscripts in Closed Access / Author-Fee journals and encourage the community to support Open Access journals and conferences.
 
 Please consider signing the [Statement on Nature Machine Intelligence](https://openaccess.engineering.oregonstate.edu).
 
@@ -49,12 +49,11 @@ This is an UNOFFICIAL implementation of the [Codon language embeddings provide s
 
 The OFFICIAL repository of CaLM is at [oxpig/CaLM](https://github.com/oxpig/CaLM).
 
-!!! Danger "Reproducibility"
-
-    The MultiMolecule team is unable to confirm that the provided model and checkpoints are producing the same intermediate representations as the original implementation.
-    This is because
-
-    The proposed method is published in a Closed Access / Author-Fee journal.
+> [!WARNING]
+> The MultiMolecule team is unable to confirm that the provided model and checkpoints are producing the same intermediate representations as the original implementation.
+> This is because
+>
+> The proposed method is published in a Closed Access / Author-Fee journal.
 
 **The team releasing CaLM did not write this model card for this model so this model card has been written by the MultiMolecule team.**
 

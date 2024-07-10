@@ -35,16 +35,16 @@ This is an UNOFFICIAL implementation of the [Informative RNA-base embedding for 
 
 The OFFICIAL repository of RNABERT is at [mana438/RNABERT](https://github.com/mana438/RNABERT).
 
-!!! Bug "Reproducibility"
+> [!CAUTION]
+> The MultiMolecule team is aware of a potential risk in reproducing the results of RNABERT.
+>
+> The original implementation of RNABERT does not prepend `<cls>` and append `<eos>` tokens to the input sequence.
+> This should not affect the performance of the model in most cases, but it can lead to unexpected behavior in some cases.
+>
+> Please set `cls_token=None` and `eos_token=None` explicitly in the tokenizer if you want the exact behavior of the original implementation.
 
-    The MultiMolecule team is aware of a potential risk in reproducing the results of RNABERT.
-
-    The original implementation of RNABERT does not prepend `<cls>` and append `<eos>` tokens to the input sequence.
-    This may lead to unexpected results when using the model.
-
-!!! Success "Reproducibility"
-
-    The MultiMolecule team has confirmed that the provided model and checkpoints are producing the same intermediate representations as the original implementation.
+> [!TIP]
+> The MultiMolecule team has confirmed that the provided model and checkpoints are producing the same intermediate representations as the original implementation.
 
 **The team releasing RNABERT did not write this model card for this model so this model card has been written by the MultiMolecule team.**
 
