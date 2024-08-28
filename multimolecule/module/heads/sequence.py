@@ -18,6 +18,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Mapping, Tuple
 
+from danling import NestedTensor
 from torch import Tensor
 from transformers.modeling_outputs import ModelOutput
 
@@ -49,9 +50,14 @@ class SequencePredictionHead(PredictionHead):
         if head_config is not None and head_config.output_name is not None:
             self.output_name = head_config.output_name
 
-    def forward(
-        self, outputs: ModelOutput | Tuple[Tensor, ...], labels: Tensor | None = None, output_name: str | None = None
-    ) -> HeadOutput:  # pylint: disable=arguments-renamed
+    def forward(  # type: ignore[override]  # pylint: disable=arguments-renamed
+        self,
+        outputs: ModelOutput | Tuple[Tensor, ...],
+        attention_mask: Tensor | None = None,  # pylint: disable=unused-argument
+        input_ids: NestedTensor | Tensor | None = None,  # pylint: disable=unused-argument
+        labels: Tensor | None = None,
+        output_name: str | None = None,
+    ) -> HeadOutput:
         r"""
         Forward pass of the SequencePredictionHead.
 

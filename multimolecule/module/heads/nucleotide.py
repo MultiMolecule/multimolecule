@@ -21,6 +21,7 @@ from typing import TYPE_CHECKING, Mapping, Tuple
 
 import torch
 from chanfig import ConfigRegistry
+from danling import NestedTensor
 from torch import Tensor
 from transformers.modeling_outputs import ModelOutput
 
@@ -63,7 +64,7 @@ class NucleotidePredictionHead(PredictionHead):
         self,
         outputs: ModelOutput | Tuple[Tensor, ...],
         attention_mask: Tensor | None = None,
-        input_ids: Tensor | None = None,
+        input_ids: NestedTensor | Tensor | None = None,
         labels: Tensor | None = None,
         output_name: str | None = None,
     ) -> HeadOutput:
@@ -79,15 +80,18 @@ class NucleotidePredictionHead(PredictionHead):
                 Defaults to `self.output_name`.
         """
         if attention_mask is None:
-            if input_ids is None:
-                raise ValueError(
-                    f"Either attention_mask or input_ids must be provided for {self.__class__.__name__} to work."
-                )
-            if self.pad_token_id is None:
-                raise ValueError(
-                    f"pad_token_id must be provided when attention_mask is not passed to {self.__class__.__name__}."
-                )
-            attention_mask = input_ids.ne(self.pad_token_id)
+            if isinstance(input_ids, NestedTensor):
+                input_ids, attention_mask = input_ids.tensor, input_ids.mask
+            else:
+                if input_ids is None:
+                    raise ValueError(
+                        f"Either attention_mask or input_ids must be provided for {self.__class__.__name__} to work."
+                    )
+                if self.pad_token_id is None:
+                    raise ValueError(
+                        f"pad_token_id must be provided when attention_mask is not passed to {self.__class__.__name__}."
+                    )
+                attention_mask = input_ids.ne(self.pad_token_id)
 
         if isinstance(outputs, (Mapping, ModelOutput)):
             output = outputs[output_name or self.output_name]
@@ -147,7 +151,7 @@ class NucleotideKMerHead(PredictionHead):
         self,
         outputs: ModelOutput | Tuple[Tensor, ...],
         attention_mask: Tensor | None = None,
-        input_ids: Tensor | None = None,
+        input_ids: NestedTensor | Tensor | None = None,
         labels: Tensor | None = None,
         output_name: str | None = None,
     ) -> HeadOutput:
@@ -163,15 +167,18 @@ class NucleotideKMerHead(PredictionHead):
                 Defaults to `self.output_name`.
         """
         if attention_mask is None:
-            if input_ids is None:
-                raise ValueError(
-                    f"Either attention_mask or input_ids must be provided for {self.__class__.__name__} to work."
-                )
-            if self.pad_token_id is None:
-                raise ValueError(
-                    f"pad_token_id must be provided when attention_mask is not passed to {self.__class__.__name__}."
-                )
-            attention_mask = input_ids.ne(self.pad_token_id)
+            if isinstance(input_ids, NestedTensor):
+                input_ids, attention_mask = input_ids.tensor, input_ids.mask
+            else:
+                if input_ids is None:
+                    raise ValueError(
+                        f"Either attention_mask or input_ids must be provided for {self.__class__.__name__} to work."
+                    )
+                if self.pad_token_id is None:
+                    raise ValueError(
+                        f"pad_token_id must be provided when attention_mask is not passed to {self.__class__.__name__}."
+                    )
+                attention_mask = input_ids.ne(self.pad_token_id)
 
         if isinstance(outputs, (Mapping, ModelOutput)):
             output = outputs[output_name or self.output_name]

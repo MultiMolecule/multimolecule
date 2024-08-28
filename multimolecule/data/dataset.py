@@ -207,7 +207,7 @@ class Dataset(datasets.Dataset):
         Default [`transform`][datasets.Dataset.set_transform] function when `preprocess` is `True`.
 
         See Also:
-            [`collate`](multimolecule.Dataset.collate)
+            [`collate`][multimolecule.Dataset.collate]
         """
         return {k: self.collate(k, v) for k, v in batch.items()}
 
@@ -216,7 +216,7 @@ class Dataset(datasets.Dataset):
         Default [`transform`][datasets.Dataset.set_transform] function when `preprocess` is `False`.
 
         See Also:
-            [`collate`](multimolecule.Dataset.collate)
+            [`collate`][multimolecule.Dataset.collate]
         """
         return {k: self.collate(k, v, tokenize=True) for k, v in batch.items()}
 
