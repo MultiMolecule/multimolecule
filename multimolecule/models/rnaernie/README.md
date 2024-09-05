@@ -14,15 +14,15 @@ widget:
     text: "UAGC<mask>UAUCAGACUGAUGUUGA"
     output:
       - label: "G"
-        score: 0.10253211855888367
+        score: 0.09175308048725128
       - label: "R"
-        score: 0.09673436731100082
+        score: 0.0863049179315567
       - label: "A"
-        score: 0.09126435220241547
+        score: 0.08118009567260742
+      - label: "<eos>"
+        score: 0.0767645537853241
       - label: "V"
-        score: 0.08036787807941437
-      - label: "S"
-        score: 0.07541776448488235
+        score: 0.07190170139074326
 ---
 
 # RNAErnie
@@ -98,26 +98,26 @@ You can use this model directly with a pipeline for masked language modeling:
 >>> unmasker = pipeline('fill-mask', model='multimolecule/rnaernie')
 >>> unmasker("uagc<mask>uaucagacugauguuga")
 
-[{'score': 0.10253211855888367,
+[{'score': 0.09175308048725128,
   'token': 8,
   'token_str': 'G',
   'sequence': 'U A G C G U A U C A G A C U G A U G U U G A'},
- {'score': 0.09673436731100082,
+ {'score': 0.0863049179315567,
   'token': 18,
   'token_str': 'R',
   'sequence': 'U A G C R U A U C A G A C U G A U G U U G A'},
- {'score': 0.09126435220241547,
+ {'score': 0.08118009567260742,
   'token': 6,
   'token_str': 'A',
   'sequence': 'U A G C A U A U C A G A C U G A U G U U G A'},
- {'score': 0.08036787807941437,
+ {'score': 0.0767645537853241,
+  'token': 2,
+  'token_str': '<eos>',
+  'sequence': 'U A G C U A U C A G A C U G A U G U U G A'},
+ {'score': 0.07190170139074326,
   'token': 13,
   'token_str': 'V',
-  'sequence': 'U A G C V U A U C A G A C U G A U G U U G A'},
- {'score': 0.07541776448488235,
-  'token': 20,
-  'token_str': 'S',
-  'sequence': 'U A G C S U A U C A G A C U G A U G U U G A'}]
+  'sequence': 'U A G C V U A U C A G A C U G A U G U U G A'}]
 ```
 
 ### Downstream Use

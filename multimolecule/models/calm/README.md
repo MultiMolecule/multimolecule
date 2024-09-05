@@ -13,16 +13,16 @@ widget:
   - example_title: "PRNP"
     text: "CTG<mask>AAGCGGCCCACGCGGACTGACGGGCGGGGG"
     output:
-      - label: "CGG"
-        score: 0.03824129328131676
-      - label: "CCG"
-        score: 0.030699172988533974
+      - label: "GUG"
+        score: 0.010724939405918121
+      - label: "GNC"
+        score: 0.010476444847881794
+      - label: "AUC"
+        score: 0.010415051132440567
       - label: "GGG"
-        score: 0.026188895106315613
-      - label: "GCG"
-        score: 0.02376439981162548
-      - label: "CCC"
-        score: 0.023052876815199852
+        score: 0.010389575734734535
+      - label: "AAU"
+        score: 0.01017767284065485
 ---
 
 # CaLM
@@ -95,26 +95,26 @@ You can use this model directly with a pipeline for masked language modeling:
 >>> unmasker = pipeline('fill-mask', model='multimolecule/calm')
 >>> unmasker("ctg<mask>aagcggcccacgcggactgacgggcggggg")
 
-[{'score': 0.03824129328131676,
-  'token': 43,
-  'token_str': 'CGG',
-  'sequence': 'CUG CGG AAG CGG CCC ACG CGG ACU GAC GGG CGG GGG'},
- {'score': 0.030699172988533974,
-  'token': 38,
-  'token_str': 'CCG',
-  'sequence': 'CUG CCG AAG CGG CCC ACG CGG ACU GAC GGG CGG GGG'},
- {'score': 0.026188895106315613,
+[{'score': 0.010724939405918121,
+  'token': 73,
+  'token_str': 'GUG',
+  'sequence': 'CUG GUG AAG CGG CCC ACG CGG ACU GAC GGG CGG GGG'},
+ {'score': 0.010476444847881794,
+  'token': 77,
+  'token_str': 'GNC',
+  'sequence': 'CUG GNC AAG CGG CCC ACG CGG ACU GAC GGG CGG GGG'},
+ {'score': 0.010415051132440567,
+  'token': 22,
+  'token_str': 'AUC',
+  'sequence': 'CUG AUC AAG CGG CCC ACG CGG ACU GAC GGG CGG GGG'},
+ {'score': 0.010389575734734535,
   'token': 68,
   'token_str': 'GGG',
   'sequence': 'CUG GGG AAG CGG CCC ACG CGG ACU GAC GGG CGG GGG'},
- {'score': 0.02376439981162548,
-  'token': 63,
-  'token_str': 'GCG',
-  'sequence': 'CUG GCG AAG CGG CCC ACG CGG ACU GAC GGG CGG GGG'},
- {'score': 0.023052876815199852,
-  'token': 37,
-  'token_str': 'CCC',
-  'sequence': 'CUG CCC AAG CGG CCC ACG CGG ACU GAC GGG CGG GGG'}]
+ {'score': 0.01017767284065485,
+  'token': 9,
+  'token_str': 'AAU',
+  'sequence': 'CUG AAU AAG CGG CCC ACG CGG ACU GAC GGG CGG GGG'}]
 ```
 
 ### Downstream Use
